@@ -39,8 +39,12 @@ module.exports = class Pokemon {
     this.hp -= damageAmount
   }
 
+  calculateTypeAdjustedAttackPower (defendingPokemonType) {
+    return this.attackPower * DAMAGE_TYPE_MODIFIER[this.type][defendingPokemonType]
+  }
+
   attack (defendingPokemon) {
-    const typeModifiedDamageAmount = this.attackPower * DAMAGE_TYPE_MODIFIER[this.type][defendingPokemon.type]
-    defendingPokemon.receiveDamage(typeModifiedDamageAmount)
+    const typeAdjustedDamageAmount = this.calculateTypeAdjustedAttackPower(defendingPokemon.type)
+    defendingPokemon.receiveDamage(typeAdjustedDamageAmount)
   }
 }
